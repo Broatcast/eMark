@@ -30,13 +30,6 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
     int64_t nDebit = wtx.GetDebit();
     int64_t nNet = nCredit - nDebit;
     uint256 hash = wtx.GetHash(), hashPrev = 0;
-	//TX-Comment
-	std::string txcomment = "";
-    if (!wtx.strTxComment.empty())
-    {
-        txcomment = wtx.strTxComment;
-    }
-	
     std::map<std::string, std::string> mapValue = wtx.mapValue;
 
     if (nNet > 0 || wtx.IsCoinBase() || wtx.IsCoinStake())
@@ -52,7 +45,6 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 CTxDestination address;
                 sub.idx = parts.size(); // sequence number
                 sub.credit = txout.nValue;
-				sub.txcomment = txcomment; // TX-Comment
                 if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
                 {
                     // Received by Bitcoin Address
@@ -82,8 +74,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     hashPrev = hash;
                 }
 
-                if (sub.credit != 0)
-				    parts.append(sub);
+                parts.append(sub);
             }
         }
     }
@@ -103,7 +94,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
             int64_t nChange = wtx.GetChange();
 
             parts.append(TransactionRecord(hash, nTime, TransactionRecord::SendToSelf, "",
-                            -(nDebit - nChange), nCredit - nChange, txcomment));
+                            -(nDebit - nChange), nCredit - nChange));
         }
         else if (fAllFromMe)
         {
@@ -117,7 +108,6 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 const CTxOut& txout = wtx.vout[nOut];
                 TransactionRecord sub(hash, nTime);
                 sub.idx = parts.size();
-				sub.txcomment = txcomment; // TX-Comment
 
                 if(wallet->IsMine(txout))
                 {
@@ -149,8 +139,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 }
                 sub.debit = -nValue;
 
-                if (sub.debit != 0)
-				    parts.append(sub);
+                parts.append(sub);
             }
         }
         else
@@ -158,7 +147,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
             //
             // Mixed debit transaction, can't break down payees
             //
-            parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0, txcomment)); // TX-Comment
+            parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0));
         }
     }
 

@@ -345,14 +345,7 @@ void RPCConsole::message(int category, const QString &message, bool html)
 
 void RPCConsole::setNumConnections(int count)
 {
-    if (!clientModel)
-        return;
-
-    QString connections = QString::number(count) + " (";
-    connections += tr("In:") + " " + QString::number(clientModel->getNumConnections(CONNECTIONS_IN)) + " / ";
-    connections += tr("Out:") + " " + QString::number(clientModel->getNumConnections(CONNECTIONS_OUT)) + ")";
-
-    ui->numberOfConnections->setText(connections);
+    ui->numberOfConnections->setText(QString::number(count));
 }
 
 void RPCConsole::setNumBlocks(int count)

@@ -319,12 +319,7 @@ void BitcoinGUI::createActions()
 
 void BitcoinGUI::createMenuBar()
 {
-    // workaround for unity's global menu
-    if (qgetenv("QT_QPA_PLATFORMTHEME") == "appmenu-qt5")
-        appMenuBar = menuBar();
-    else
-        appMenuBar = new QMenuBar();
-
+    appMenuBar = new QMenuBar();
 
     // Configure the menus
     QMenu *file = appMenuBar->addMenu(tr("&File"));
@@ -501,7 +496,7 @@ void BitcoinGUI::createTrayIcon()
     trayIconMenu->addAction(quitAction);
 #endif
 
-    notificator = new Notificator(QApplication::applicationName(), trayIcon, this);
+    notificator = new Notificator(qApp->applicationName(), trayIcon);
 }
 
 #ifndef Q_OS_MAC
@@ -996,7 +991,7 @@ void BitcoinGUI::updateWeight()
     if (!lockWallet)
         return;
 
-    nWeight = pwalletMain->GetStakeWeight();
+    pwalletMain->GetStakeWeight(nWeight);
 }
 
 void BitcoinGUI::updateStakingIcon()
