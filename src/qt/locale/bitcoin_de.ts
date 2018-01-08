@@ -98,7 +98,7 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Bearbeiten</translation>
+        <translation>&amp;Editieren</translation>
     </message>
     <message>
         <source>Export Address Book Data</source>
@@ -254,14 +254,6 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
         <translation>Ein fataler Fehler ist aufgetreten. eMark kann nicht fortgesetzt werden. Läuft bereits eine Instanz?.</translation>
     </message>
     <message>
-        <source>Synchronizing with network...</source>
-        <translation>Synchronisiere mit Netzwerk...</translation>
-    </message>
-    <message>
-        <source>Importing blocks...</source>
-        <translation>Importiert Blöcke...</translation>
-    </message>
-    <message>
         <source>Deutsche eMark</source>
         <translation>Deutsche eMark</translation>
     </message>
@@ -311,7 +303,7 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>&amp;Beenden</translation>
+        <translation>B&amp;eenden</translation>
     </message>
     <message>
         <source>Quit application</source>
@@ -355,7 +347,7 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
     </message>
     <message>
         <source>&amp;Backup Wallet...</source>
-        <translation>&amp;Wallet sichern...</translation>
+        <translation>Wallet &amp;sichern...</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -363,7 +355,7 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
     </message>
     <message>
         <source>&amp;Change Passphrase...</source>
-        <translation>&amp;Passwort ändern...</translation>
+        <translation>Passwort &amp;ändern...</translation>
     </message>
     <message>
         <source>Change the passphrase used for wallet encryption</source>
@@ -371,7 +363,7 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
     </message>
     <message>
         <source>&amp;Unlock Wallet...</source>
-        <translation>&amp;Wallet entsperren</translation>
+        <translation>Wallet &amp;entsperren</translation>
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -490,11 +482,11 @@ Dieses Produkt enthält Software, entwickelt vom OpenSSL Project für das OpenSS
     </message>
     <message>
         <source>Last received block was generated %1 ago.</source>
-        <translation>Der zuletzt empfangene Block wurde vor %1 erstellt.</translation>
+        <translation>Zuletzt empfangene Block wurde vor %1 erstellt.</translation>
     </message>
     <message>
         <source>Transactions after this will not yet be visible.</source>
-        <translation>Die nachfolgenden Transaktionen werden noch nicht sichtbar sein.</translation>
+        <translation>Nachfolgende Transaktionen werden noch nicht sichtbar sein.</translation>
     </message>
     <message>
         <source>eMark</source>
@@ -549,15 +541,15 @@ Adresse: %4</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;not encrypted&lt;/b&gt;</source>
-        <translation>Die Wallet ist &lt;b&gt;nicht verschlüsselt&lt;/b&gt; </translation>
+        <translation>Wallet ist &lt;b&gt;nicht verschlüsselt&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation>Die Wallet ist &lt;b&gt;verschlüsselt&lt;/b&gt; und aktuell &lt;b&gt;entsperrt&lt;/b&gt;</translation>
+        <translation>Wallet ist &lt;b&gt;verschlüsselt&lt;/b&gt; und aktuell &lt;b&gt;entsperrt&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation>Die Wallet ist &lt;b&gt;verschlüsselt&lt;/b&gt; und aktuell &lt;b&gt;gesperrt&lt;/b&gt;</translation>
+        <translation>Wallet ist &lt;b&gt;verschlüsselt&lt;/b&gt; und aktuell &lt;b&gt;gesperrt&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Backup Wallet</source>
@@ -1133,7 +1125,7 @@ Das bedeutet, dass eine Gebühr von %2 benötigt wird.
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the current balance</source>
-        <translation>Unbestätigte Coins die noch nicht zum Gesamtbetrag hinzugefügt wurden</translation>
+        <translation>Alle Stakecoins die noch nicht zum Gesamtbetrag hinzugefügt wurden</translation>
     </message>
     <message>
         <source>Immature:</source>
@@ -1942,10 +1934,6 @@ Das bedeutet, dass eine Gebühr von %2 benötigt wird.
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
-	<message>
-        <source>Transaction Comment</source>
-        <translation>Verwendungszweck</translation>
-    </message>
     <message>
         <source>Amount</source>
         <translation>Betrag</translation>
@@ -1967,7 +1955,7 @@ Das bedeutet, dass eine Gebühr von %2 benötigt wird.
     </message>
     <message>
         <source>Unconfirmed</source>
-        <translation>Unbestätigt</translation>
+        <translation>Unbestätigt:</translation>
     </message>
     <message>
         <source>Confirming (%1 of %2 recommended confirmations)</source>
@@ -2032,10 +2020,6 @@ Das bedeutet, dass eine Gebühr von %2 benötigt wird.
     <message>
         <source>Destination address of transaction.</source>
         <translation>Zieladresse der Transaktion</translation>
-    </message>
-	<message>
-        <source>Transaction Comment.</source>
-        <translation>Verwendungszweck der Transaktion</translation>
     </message>
     <message>
         <source>Amount removed from or added to balance.</source>
@@ -2753,6 +2737,10 @@ Falls die Konfigurationsdatei nicht existiert, erzeugen Sie diese bitte mit Lese
     <message>
         <source>WARNING: Invalid checkpoint found! Displayed transactions may not be correct! You may need to upgrade, or notify developers.</source>
         <translation>Warnung: Ungültiger Checkpunkt gefunden! Angezeigte Transaktionen können falsch sein! Sie müssen vielleicht updaten oder die Entwickler benachrichtigen.</translation>
+    </message>
+    <message>
+        <source>Importing blocks...</source>
+        <translation>Importiert Blöcke...</translation>
     </message>
 </context>
 </TS>

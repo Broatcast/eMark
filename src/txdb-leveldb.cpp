@@ -34,14 +34,13 @@ static leveldb::Options GetOptions() {
     return options;
 }
 
-static void init_blockindex(leveldb::Options& options, bool fRemoveOld = false, bool fCreateBootstrap = false) {
+void init_blockindex(leveldb::Options& options, bool fRemoveOld = false) {
     // First time init.
     filesystem::path directory = GetDataDir() / "txleveldb";
 
     if (fRemoveOld) {
         filesystem::remove_all(directory); // remove directory
         unsigned int nFile = 1;
-		filesystem::path bootstrap = GetDataDir() / "bootstrap.dat";
 
         while (true)
         {
@@ -51,11 +50,7 @@ static void init_blockindex(leveldb::Options& options, bool fRemoveOld = false, 
             if( !filesystem::exists( strBlockFile ) )
                 break;
 
-            if (fCreateBootstrap && nFile == 1 && !filesystem::exists(bootstrap)) {
-                filesystem::rename(strBlockFile, bootstrap);
-            } else {
-                filesystem::remove(strBlockFile);
-            }
+            filesystem::remove(strBlockFile);
 
             nFile++;
         }
@@ -106,7 +101,7 @@ CTxDB::CTxDB(const char* pszMode)
             delete activeBatch;
             activeBatch = NULL;
 
-            init_blockindex(options, true, true); // Remove directory and create new database
+            init_blockindex(options, true); // Remove directory and create new database
             pdb = txdb;
 
             bool fTmp = fReadOnly;

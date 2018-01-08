@@ -272,7 +272,7 @@ CBlock* CreateNewBlock(CReserveKey& reservekey, bool fProofOfStake, int64_t* pFe
                 continue;
 
             // Timestamp limit
-            if (tx.nTime > GetAdjustedTime() || (fProofOfStake && tx.nTime > pblock->vtx[1].nTime))
+            if (tx.nTime > GetAdjustedTime() || (fProofOfStake && tx.nTime > pblock->vtx[0].nTime))
                 continue;
 
             // Transaction fee
@@ -514,6 +514,7 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
 
     return true;
 }
+
 
 void ThreadStakeMiner(CWallet *pwallet)
 {

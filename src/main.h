@@ -36,8 +36,8 @@ static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
 static const unsigned int MAX_TX_SIGOPS = MAX_BLOCK_SIGOPS/5;
 /** The maximum number of orphan transactions kept in memory */
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
-/** Default for -maxorphanblocksmib, maximum number of memory to keep orphan blocks */
-static const unsigned int DEFAULT_MAX_ORPHAN_BLOCKS = 40;
+/** Default for -maxorphanblocks, maximum number of orphan blocks kept in memory */
+static const unsigned int DEFAULT_MAX_ORPHAN_BLOCKS = 750;
 /** The maximum number of entries in an 'inv' protocol message */
 static const unsigned int MAX_INV_SZ = 50000;
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
@@ -59,6 +59,9 @@ inline int64_t FutureDriftV1(int64_t nTime) { return nTime + 2 * 60 * 60; } //up
 inline int64_t FutureDriftV2(int64_t nTime) { return nTime + 15; } 
 inline int64_t FutureDrift(int64_t nTime) { return IsProtocolV3(nTime) ? FutureDriftV2(nTime) : FutureDriftV1(nTime); }
 
+inline int64_t PastDrift(int64_t nTime)   { return IsProtocolV3(nTime) ? nTime      : nTime - 2 * 60 * 60; }
+
+
 extern CScript COINBASE_FLAGS;
 extern CCriticalSection cs_main;
 extern CTxMemPool mempool;
@@ -66,6 +69,7 @@ extern std::map<uint256, CBlockIndex*> mapBlockIndex;
 extern std::set<std::pair<COutPoint, unsigned int> > setStakeSeen;
 extern CBlockIndex* pindexGenesisBlock;
 unsigned int GetStakeMinAge(int64_t nTime);
+extern unsigned int nStakeMaxAge;
 extern unsigned int nNodeLifespan;
 extern int nCoinbaseMaturity;
 extern int nBestHeight;
@@ -360,7 +364,7 @@ public:
     {
         std::string str;
         str += IsCoinBase()? "Coinbase" : (IsCoinStake()? "Coinstake" : "CTransaction");
-        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%u, vout.size=%u, nLockTime=%d, strTxComment=%s)\n", // TX Comment
+        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%d, strTxComment=%s)\n", // TX Comment
             GetHash().ToString(),
             nTime,
             nVersion,
@@ -722,7 +726,7 @@ public:
         if (nHeight >= 9689 || TestNet())
         {
             // Take last bit of block hash as entropy bit
-            unsigned int nEntropyBit = ((GetHash().GetLow64()) & 1llu);
+            unsigned int nEntropyBit = ((GetHash().Get64()) & 1llu);
             return nEntropyBit;
         }
 
@@ -730,7 +734,7 @@ public:
         int nBitNum = nHeight & 0xFF;
         int nItemNum = nHeight / 0xFF;
 
-        unsigned int nEntropyBit = (unsigned int) ((entropyStore[nItemNum] & (uint256(1) << nBitNum)) >> nBitNum).GetLow64();
+        unsigned int nEntropyBit = (unsigned int) ((entropyStore[nItemNum] & (uint256(1) << nBitNum)) >> nBitNum).Get64();
         return nEntropyBit;
     }
 
@@ -879,7 +883,7 @@ public:
     std::string ToString() const
     {
         std::stringstream s;
-        s << strprintf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%u, vchBlockSig=%s)\n",
+        s << strprintf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%"PRIszu", vchBlockSig=%s)\n",
             GetHash().ToString(),
             nVersion,
             hashPrevBlock.ToString(),
